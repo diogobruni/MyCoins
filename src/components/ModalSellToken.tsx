@@ -30,7 +30,10 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
 
   const indexTokenPortfolio = portfolio.findIndex(t => t.id === tokenId)
   const sellPortfolio = portfolio[indexTokenPortfolio]
-  const sellToken = tokenList.find(t => t.id === tokenId)
+
+
+  const indexSellToken = tokenList.findIndex(t => t.id === tokenId)
+  const sellToken = tokenList[indexSellToken]
 
   const handleFormReset = () => {
     setAmount(0)
@@ -69,7 +72,15 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
       setFormMessage(newFormMessage)
 
       let newPortfolio = portfolio
+      let newTokenList = tokenList
       newPortfolio[indexTokenPortfolio].amount = Math.max(0, newPortfolio[indexTokenPortfolio].amount - amount)
+
+      if (newPortfolio[indexTokenPortfolio].amount === 0) {
+        newPortfolio.splice(indexTokenPortfolio, 1)
+        newTokenList.splice(indexSellToken, 1)
+        setTokenList(newTokenList)
+      }
+
       setPortfolio(newPortfolio)
       handleFormReset()
     }

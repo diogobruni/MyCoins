@@ -44,7 +44,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     updateTokenList()
-  })
+  }, [])
   useInterval(updateTokenList, 1000 * 60 * 1)
 
 

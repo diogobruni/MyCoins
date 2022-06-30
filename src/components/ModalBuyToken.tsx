@@ -234,6 +234,8 @@ export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
                                             <Image
                                               src={token.image.thumb}
                                               alt={token.name}
+                                              width={25}
+                                              height={25}
                                             />
                                             {token.name}
                                           </span>

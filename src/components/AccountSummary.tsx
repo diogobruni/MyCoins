@@ -72,7 +72,7 @@ export function AccountSummary() {
 
       <div className="flex gap-2 mx-auto items-center">
         <span className={`text-sm ${usdChangeClass}`}>
-          {usd_change_24h > 0 ? `+${usdChangeFormatted}` : `-${usdChangeFormatted}`}
+          {usd_change_24h >= 0 ? `${usdChangeFormatted}` : `-${usdChangeFormatted}`}
         </span>
 
         <span className="text-xs">|</span>
