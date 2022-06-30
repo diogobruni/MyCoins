@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.button {
+  @apply text-background rounded-full p-2 px-4 text-xs font-semibold uppercase tracking-widest transition ease-linear;
+}
+
+.button-green {
+  @apply button bg-green hover:bg-green/90;
+}
+
+.button-red {
+  @apply button bg-red hover:bg-red/90;
+}
