@@ -86,7 +86,7 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
     }
   }
 
-  if (!sellToken) {
+  if (!sellToken || !sellPortfolio) {
     return <></>
   }
 

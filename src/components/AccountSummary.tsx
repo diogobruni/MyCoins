@@ -7,7 +7,10 @@ import { useTokenList, TokenListContent } from "../providers/token-list"
 //   diffPercentage: number
 // }
 
-const getMyPortfolioSummary = (portfolio: PortfolioContent["portfolio"], tokenList: TokenListContent['tokenList']) => {
+const getMyPortfolioSummary = (
+  portfolio: PortfolioContent["portfolio"],
+  tokenList: TokenListContent['tokenList']
+) => {
   let usdTotal = 0
   let usdChange24h = 0
 
@@ -23,17 +26,21 @@ const getMyPortfolioSummary = (portfolio: PortfolioContent["portfolio"], tokenLi
       || !token.price_change_percentage_24h
     ) continue
 
+    const previousUsd = (token.current_price.usd * 100) / (token.price_change_percentage_24h + 100)
+
     usdTotal += token.current_price.usd * amount
     // usdChange24h += token.price_change_24h.usd
-    usdChange24h += token.current_price.usd * token.price_change_percentage_24h / 100
+    // usdChange24h += (token.current_price.usd * token.price_change_percentage_24h / 100) * amount
+    usdChange24h += (token.current_price.usd - previousUsd) * amount
   }
 
-  const usdTotalChange24h = usdTotal + usdChange24h
+  const usdBefore24h = usdTotal - usdChange24h
 
   const data = {
     usd: usdTotal,
     usd_change_24h: usdChange24h,
-    percentage_change_24h: (usdTotalChange24h - usdTotal) / usdTotal * 100 || 0
+    // percentage_change_24h: (usdBefore24h - usdTotal) / usdTotal * 100 || 0
+    percentage_change_24h: ((usdTotal / usdBefore24h * 100) - 100) || 0
   }
 
   return data
