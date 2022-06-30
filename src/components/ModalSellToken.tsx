@@ -1,11 +1,8 @@
-import { Combobox, Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
-import { Fragment, useEffect, useState } from 'react'
+import { FormEvent, Fragment, useEffect, useRef, useState } from 'react'
 import { usePortfolio } from '../providers/portfolio'
 import { useTokenList } from '../providers/token-list'
-
-import { Token } from '../repositories/tokens-repository'
 
 interface ModalBuyTokenProps {
   isOpen: boolean
@@ -19,6 +16,7 @@ interface formMessageType {
 }
 
 export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProps) {
+
   const [amount, setAmount] = useState(0)
   const [formMessage, setFormMessage] = useState<formMessageType>({
     amount: '',
@@ -36,12 +34,17 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
   const sellToken = tokenList[indexSellToken]
 
   const handleFormReset = () => {
-    setAmount(0)
-
     setIsOpen(false)
+    setAmount(0)
+    setFormMessage({
+      amount: '',
+      form: ''
+    })
   }
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault()
+
     let valid = true
     const newFormMessage = {
       amount: '',
@@ -149,12 +152,13 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
                   Your balance: {sellPortfolio.amount}
                 </Dialog.Description> */}
 
-                <div className="mt-4">
+                <form className="mt-4" onSubmit={handleFormSubmit}>
 
                   <div className="flex flex-col gap-2">
                     <div className="">
                       <label className="text-sm text-white/70">Amount to sell</label>
                       <input
+                        autoFocus
                         type="number"
                         min="0"
                         max={sellPortfolio.amount}
@@ -181,6 +185,7 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
 
                   <div className="flex gap-2 justify-end">
                     <button
+                      type="button"
                       onClick={handleFormReset}
                       className="button-red"
                     >
@@ -189,14 +194,14 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
 
                     <button
                       type="submit"
-                      onClick={handleFormSubmit}
+                      // onClick={handleFormSubmit}
                       className="button-green"
                     >
                       Sell
                     </button>
                   </div>
 
-                </div>
+                </form>
               </Dialog.Panel>
             </div>
           </Transition.Child>

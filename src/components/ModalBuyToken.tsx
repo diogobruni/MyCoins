@@ -1,7 +1,7 @@
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
-import { Fragment, useEffect, useState } from 'react'
+import { FormEvent, Fragment, useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { usePortfolio, PortfolioToken } from '../providers/portfolio'
 import { useTokenList, TokenListContent } from '../providers/token-list'
@@ -66,13 +66,21 @@ export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
   }
 
   const handleFormReset = () => {
+    setIsOpen(false)
+
     setSelectedToken(undefined)
     setAmount(0)
+    setFormMessage({
+      token: '',
+      amount: '',
+      form: ''
+    })
 
-    setIsOpen(false)
   }
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
     let valid = true
     const newFormMessage = {
       token: '',
@@ -178,7 +186,7 @@ export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
                   Add a new token to your portfolio.
                 </Dialog.Description>
 
-                <div className="mt-4">
+                <form className="mt-4" onSubmit={handleFormSubmit}>
 
                   <div className="flex flex-col gap-2">
                     <div>
@@ -305,6 +313,7 @@ export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
 
                   <div className="flex gap-2 justify-end">
                     <button
+                      type="button"
                       onClick={handleFormReset}
                       className="button-red"
                     >
@@ -313,14 +322,14 @@ export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
 
                     <button
                       type="submit"
-                      onClick={handleFormSubmit}
+                      // onClick={handleFormSubmit}
                       className="button-green"
                     >
                       Add
                     </button>
                   </div>
 
-                </div>
+                </form>
               </Dialog.Panel>
             </div>
           </Transition.Child>
