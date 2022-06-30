@@ -1,5 +1,6 @@
 import { Menu, Transition } from "@headlessui/react"
 import { ChevronDownIcon, DotsHorizontalIcon, DotsVerticalIcon, ScaleIcon } from "@heroicons/react/solid"
+import Image from "next/image"
 import { Fragment } from "react"
 import { usePortfolio } from "../providers/portfolio"
 import { useTokenList } from "../providers/token-list"
@@ -88,8 +89,8 @@ export function AccountTokenList({
           return (
             <li key={token.symbol} className="relative flex justify-between bg-foreground p-3 rounded-lg">
               <div className="flex items-center gap-2">
-                <img
-                  className="h-[100%] max-h-[25px] w-auto"
+                <Image
+                  className=""
                   src={token.image.thumb}
                   alt={token.name}
                   width={25}

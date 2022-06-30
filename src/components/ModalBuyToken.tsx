@@ -1,5 +1,6 @@
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import Image from 'next/image'
 import { Fragment, useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { usePortfolio, PortfolioToken } from '../providers/portfolio'
@@ -230,7 +231,10 @@ export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
                                       {({ selected, active }) => (
                                         <>
                                           <span className={`flex gap-2 items-center truncate ${selected ? 'font-bold' : 'font-normal'}`}>
-                                            <img className="" src={token.image.thumb} alt="" />
+                                            <Image
+                                              src={token.image.thumb}
+                                              alt={token.name}
+                                            />
                                             {token.name}
                                           </span>
                                           {selected ? (

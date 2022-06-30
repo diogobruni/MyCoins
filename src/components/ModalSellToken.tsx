@@ -1,5 +1,6 @@
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import Image from 'next/image'
 import { Fragment, useEffect, useState } from 'react'
 import { usePortfolio } from '../providers/portfolio'
 import { useTokenList } from '../providers/token-list'
@@ -117,7 +118,12 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
               <Dialog.Panel className="mx-auto w-[28rem] max-w-lg rounded-xl bg-foreground p-4 shadow-xl">
                 <Dialog.Title className="text-lg font-medium text-white flex justify-between">
                   <div className="flex gap-2">
-                    <img src={sellToken.image.thumb} alt="" />
+                    <Image
+                      src={sellToken.image.thumb}
+                      alt={sellToken.name}
+                      width={25}
+                      height={25}
+                    />
                     <span>
                       Sell <strong>{sellToken.name}</strong>
                     </span>
