@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { FormEvent, Fragment, useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { usePortfolio, PortfolioToken } from '../providers/portfolio'
-import { useTokenList, TokenListContent } from '../providers/token-list'
+import { useTokenList } from '../providers/token-list'
 import { CoingeckoTokensRepository } from '../repositories/coingecko/coingecko-tokens-repository'
 
 import { Token } from '../repositories/tokens-repository'
@@ -23,7 +23,7 @@ interface formMessageType {
   form: string
 }
 
-export function ModalBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
+export function ModalSearchAndBuyToken({ isOpen, setIsOpen }: ModalBuyTokenProps) {
   const { portfolio, setPortfolio } = usePortfolio()
   const { tokenList, setTokenList } = useTokenList()
 
