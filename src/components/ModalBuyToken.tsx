@@ -1,14 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import { FormEvent, Fragment, useState } from 'react'
-import Slider from 'rc-slider'
 
 import { usePortfolio } from '../providers/portfolio'
 import { useTokenList } from '../providers/token-list'
 
-import 'rc-slider/assets/index.css';
-
-interface ModalSellTokenProps {
+interface ModalBuyTokenProps {
   isOpen: boolean
   setIsOpen: Function
   tokenId: string
@@ -19,7 +16,7 @@ interface formMessageType {
   form: string
 }
 
-export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalSellTokenProps) {
+export function ModalBuyToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProps) {
 
   const [amount, setAmount] = useState(0)
   const [formMessage, setFormMessage] = useState<formMessageType>({
@@ -31,11 +28,11 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalSellTokenPro
   const { tokenList, setTokenList } = useTokenList()
 
   const indexTokenPortfolio = portfolio.findIndex(t => t.id === tokenId)
-  const sellPortfolio = portfolio[indexTokenPortfolio]
+  const buyPortfolio = portfolio[indexTokenPortfolio]
 
 
-  const indexSellToken = tokenList.findIndex(t => t.id === tokenId)
-  const sellToken = tokenList[indexSellToken]
+  const indexBuyToken = tokenList.findIndex(t => t.id === tokenId)
+  const buyToken = tokenList[indexBuyToken]
 
   const handleFormReset = () => {
     setIsOpen(false)
@@ -65,11 +62,6 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalSellTokenPro
       newFormMessage.amount = '* The token amount must be greater than 0'
     }
 
-    if (amount > portfolio[indexTokenPortfolio].amount) {
-      valid = false
-      newFormMessage.amount = `* You only have ${portfolio[indexTokenPortfolio].amount} tokens`
-    }
-
     if (!valid) {
       setFormMessage(newFormMessage)
       return false
@@ -79,21 +71,14 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalSellTokenPro
       setFormMessage(newFormMessage)
 
       let newPortfolio = portfolio
-      let newTokenList = tokenList
-      newPortfolio[indexTokenPortfolio].amount = Math.max(0, newPortfolio[indexTokenPortfolio].amount - amount)
-
-      if (newPortfolio[indexTokenPortfolio].amount === 0) {
-        newPortfolio.splice(indexTokenPortfolio, 1)
-        newTokenList.splice(indexSellToken, 1)
-        setTokenList(newTokenList)
-      }
+      newPortfolio[indexTokenPortfolio].amount = Math.max(0, newPortfolio[indexTokenPortfolio].amount + amount)
 
       setPortfolio(newPortfolio)
       handleFormReset()
     }
   }
 
-  if (!sellToken || !sellPortfolio) {
+  if (!buyToken || !buyPortfolio) {
     return <></>
   }
 
@@ -137,46 +122,39 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalSellTokenPro
                 <Dialog.Title className="text-lg font-medium text-white flex justify-between">
                   <div className="flex gap-2">
                     <Image
-                      src={sellToken.image.thumb}
-                      alt={sellToken.name}
+                      src={buyToken.image.thumb}
+                      alt={buyToken.name}
                       width={25}
                       height={25}
                     />
                     <span>
-                      Sell <strong>{sellToken.name}</strong>
+                      Buy <strong>{buyToken.name}</strong>
                     </span>
                   </div>
 
                   <small>
-                    Your balance: {sellPortfolio.amount}
+                    Your balance: {buyPortfolio.amount}
                   </small>
                 </Dialog.Title>
 
                 {/* <Dialog.Description className="text-sm text-white/70 mt-4">
-                  Your balance: {sellPortfolio.amount}
+                  Your balance: {buyPortfolio.amount}
                 </Dialog.Description> */}
 
                 <form className="mt-4" onSubmit={handleFormSubmit}>
 
                   <div className="flex flex-col gap-2">
                     <div className="">
-                      <label className="text-sm text-white/70">Amount to sell</label>
+                      <label className="text-sm text-white/70">Amount to buy</label>
                       <input
                         autoFocus
                         value={amount}
                         type="number"
                         min="0"
-                        max={sellPortfolio.amount}
+                        max={buyPortfolio.amount}
                         className="w-full rounded-lg bg-white py-2 pl-3 text-sm leading-5 text-gray-900 shadow-md focus:ring-0"
                         placeholder="0"
                         onChange={(event) => { setAmount(parseFloat(event.target.value)) }}
-                      />
-
-                      <Slider
-                        className="mt-2"
-                        min={0}
-                        max={sellPortfolio.amount}
-                        onChange={(value) => { setAmount(value as number) }}
                       />
 
                       {formMessage.amount && (
@@ -209,7 +187,7 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalSellTokenPro
                       // onClick={handleFormSubmit}
                       className="button-green"
                     >
-                      Sell
+                      Buy
                     </button>
                   </div>
 
