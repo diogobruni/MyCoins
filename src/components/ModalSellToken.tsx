@@ -1,8 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
-import { FormEvent, Fragment, useEffect, useRef, useState } from 'react'
+import { FormEvent, Fragment, useState } from 'react'
+import Slider from 'rc-slider'
+
 import { usePortfolio } from '../providers/portfolio'
 import { useTokenList } from '../providers/token-list'
+
+import 'rc-slider/assets/index.css';
 
 interface ModalBuyTokenProps {
   isOpen: boolean
@@ -159,12 +163,20 @@ export function ModalSellToken({ isOpen, setIsOpen, tokenId }: ModalBuyTokenProp
                       <label className="text-sm text-white/70">Amount to sell</label>
                       <input
                         autoFocus
+                        value={amount}
                         type="number"
                         min="0"
                         max={sellPortfolio.amount}
                         className="w-full rounded-lg bg-white py-2 pl-3 text-sm leading-5 text-gray-900 shadow-md focus:ring-0"
                         placeholder="0"
                         onChange={(event) => { setAmount(parseFloat(event.target.value)) }}
+                      />
+
+                      <Slider
+                        className="mt-2"
+                        min={0}
+                        max={sellPortfolio.amount}
+                        onChange={(value) => { setAmount(value as number) }}
                       />
 
                       {formMessage.amount && (
