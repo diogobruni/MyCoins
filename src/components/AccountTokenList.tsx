@@ -7,16 +7,16 @@ import { useTokenList } from "../providers/token-list"
 import { Token } from "../repositories/tokens-repository"
 
 interface AccountTokenListProps {
-  isModalBuyTokenOpen: boolean
-  setIsModalBuyTokenOpen: Function
+  isModalSearchAndBuyTokenOpen: boolean
+  setIsModalSearchAndBuyTokenOpen: Function
   isModalSellTokenOpen: boolean
   setIsModalSellTokenOpen: Function
   setTokenIdToSell: Function
 }
 
 export function AccountTokenList({
-  isModalBuyTokenOpen,
-  setIsModalBuyTokenOpen,
+  isModalSearchAndBuyTokenOpen,
+  setIsModalSearchAndBuyTokenOpen,
 
   setTokenIdToSell,
   isModalSellTokenOpen,
@@ -66,7 +66,7 @@ export function AccountTokenList({
 
         <button
           className="button-green"
-          onClick={() => setIsModalBuyTokenOpen(true)}
+          onClick={() => setIsModalSearchAndBuyTokenOpen(true)}
         >
           Add Token
         </button>

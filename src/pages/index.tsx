@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import { AccountSummary } from '../components/AccountSummary'
 import { AccountTokenList } from '../components/AccountTokenList'
-import { ModalBuyToken } from '../components/ModalBuyToken'
+import { ModalSearchAndBuyToken } from '../components/ModalSearchAndBuyToken'
 import { usePortfolio } from '../providers/portfolio'
 import { useTokenList } from '../providers/token-list'
 import { Token } from '../repositories/tokens-repository'
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
   useInterval(updateTokenList, 1000 * 60 * 1)
 
 
-  const [isModalBuyTokenOpen, setIsModalBuyTokenOpen] = useState(false)
+  const [isModalSearchAndBuyTokenOpen, setIsModalSearchAndBuyTokenOpen] = useState(false)
   const [isModalSellTokenOpen, setIsModalSellTokenOpen] = useState(false)
   const [tokenIdToSell, setTokenIdToSell] = useState<string>('')
 
@@ -62,9 +62,9 @@ const Home: NextPage = () => {
 
       <AccountSummary />
 
-      <ModalBuyToken
-        isOpen={isModalBuyTokenOpen}
-        setIsOpen={setIsModalBuyTokenOpen}
+      <ModalSearchAndBuyToken
+        isOpen={isModalSearchAndBuyTokenOpen}
+        setIsOpen={setIsModalSearchAndBuyTokenOpen}
       />
 
       <ModalSellToken
@@ -74,8 +74,8 @@ const Home: NextPage = () => {
       />
 
       <AccountTokenList
-        isModalBuyTokenOpen={isModalBuyTokenOpen}
-        setIsModalBuyTokenOpen={setIsModalBuyTokenOpen}
+        isModalSearchAndBuyTokenOpen={isModalSearchAndBuyTokenOpen}
+        setIsModalSearchAndBuyTokenOpen={setIsModalSearchAndBuyTokenOpen}
 
         setTokenIdToSell={setTokenIdToSell}
         isModalSellTokenOpen={isModalSellTokenOpen}
