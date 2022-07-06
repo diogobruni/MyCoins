@@ -9,16 +9,22 @@ import { Token } from "../repositories/tokens-repository"
 interface AccountTokenListProps {
   isModalSearchAndBuyTokenOpen: boolean
   setIsModalSearchAndBuyTokenOpen: Function
+  isModalBuyTokenOpen: boolean
+  setIsModalBuyTokenOpen: Function
   isModalSellTokenOpen: boolean
   setIsModalSellTokenOpen: Function
-  setTokenIdToSell: Function
+  setTokenIdToTrade: Function
 }
 
 export function AccountTokenList({
   isModalSearchAndBuyTokenOpen,
   setIsModalSearchAndBuyTokenOpen,
 
-  setTokenIdToSell,
+  setTokenIdToTrade,
+
+  isModalBuyTokenOpen,
+  setIsModalBuyTokenOpen,
+
   isModalSellTokenOpen,
   setIsModalSellTokenOpen
 }: AccountTokenListProps) {
@@ -30,8 +36,13 @@ export function AccountTokenList({
     currency: 'USD',
   })
 
+  const handleOpenBuyTokenModal = (token: Token) => {
+    setTokenIdToTrade(token.id)
+    setIsModalBuyTokenOpen(true)
+  }
+
   const handleOpenSellTokenModal = (token: Token) => {
-    setTokenIdToSell(token.id)
+    setTokenIdToTrade(token.id)
     setIsModalSellTokenOpen(true)
   }
 
@@ -137,13 +148,23 @@ export function AccountTokenList({
                       <Menu.Items className="absolute z-10 right-0 top-full mt-2 bg-background rounded p-1 w-40 ring-1 ring-foreground">
                         <Menu.Item >
                           {({ active }) => (
-                            <button
-                              className="w-full p-2 rounded flex items-center gap-2 text-xs font-semibold uppercase tracking-widest hover:bg-foreground"
-                              onClick={() => { handleOpenSellTokenModal(token) }}
-                            >
-                              {/* <ScaleIcon className={`w-5 h-5 ${active ? '' : 'text-red'}`} /> */}
-                              Sell token
-                            </button>
+                            <>
+                              <button
+                                className="w-full p-2 rounded flex items-center gap-2 text-xs font-semibold uppercase tracking-widest hover:bg-foreground"
+                                onClick={() => { handleOpenBuyTokenModal(token) }}
+                              >
+                                {/* <ScaleIcon className={`w-5 h-5 ${active ? '' : 'text-red'}`} /> */}
+                                Buy token
+                              </button>
+
+                              <button
+                                className="w-full p-2 rounded flex items-center gap-2 text-xs font-semibold uppercase tracking-widest hover:bg-foreground"
+                                onClick={() => { handleOpenSellTokenModal(token) }}
+                              >
+                                {/* <ScaleIcon className={`w-5 h-5 ${active ? '' : 'text-red'}`} /> */}
+                                Sell token
+                              </button>
+                            </>
                           )}
                         </Menu.Item>
                       </Menu.Items>

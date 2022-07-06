@@ -1,18 +1,20 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import useInterval from 'use-interval'
+
+import { usePortfolio } from '../providers/portfolio'
+import { useTokenList } from '../providers/token-list'
+
+import { Token } from '../repositories/tokens-repository'
+import { CoingeckoTokensRepository } from '../repositories/coingecko/coingecko-tokens-repository'
+import { GetTokenUseCase } from '../use-cases/get-token-use-case'
 
 import { Header } from '../components/Header'
 import { AccountSummary } from '../components/AccountSummary'
 import { AccountTokenList } from '../components/AccountTokenList'
 import { ModalSearchAndBuyToken } from '../components/ModalSearchAndBuyToken'
-import { usePortfolio } from '../providers/portfolio'
-import { useTokenList } from '../providers/token-list'
-import { Token } from '../repositories/tokens-repository'
-import { CoingeckoTokensRepository } from '../repositories/coingecko/coingecko-tokens-repository'
-import { GetTokenUseCase } from '../use-cases/get-token-use-case'
-import useInterval from 'use-interval'
-import { count } from 'console'
+import { ModalBuyToken } from '../components/ModalBuyToken'
 import { ModalSellToken } from '../components/ModalSellToken'
 
 const Home: NextPage = () => {
@@ -49,8 +51,9 @@ const Home: NextPage = () => {
 
 
   const [isModalSearchAndBuyTokenOpen, setIsModalSearchAndBuyTokenOpen] = useState(false)
+  const [isModalBuyTokenOpen, setIsModalBuyTokenOpen] = useState(false)
   const [isModalSellTokenOpen, setIsModalSellTokenOpen] = useState(false)
-  const [tokenIdToSell, setTokenIdToSell] = useState<string>('')
+  const [tokenIdToTrade, setTokenIdToTrade] = useState<string>('')
 
   return (
     <>
@@ -67,17 +70,27 @@ const Home: NextPage = () => {
         setIsOpen={setIsModalSearchAndBuyTokenOpen}
       />
 
+      <ModalBuyToken
+        isOpen={isModalBuyTokenOpen}
+        setIsOpen={setIsModalBuyTokenOpen}
+        tokenId={tokenIdToTrade}
+      />
+
       <ModalSellToken
         isOpen={isModalSellTokenOpen}
         setIsOpen={setIsModalSellTokenOpen}
-        tokenId={tokenIdToSell}
+        tokenId={tokenIdToTrade}
       />
 
       <AccountTokenList
         isModalSearchAndBuyTokenOpen={isModalSearchAndBuyTokenOpen}
         setIsModalSearchAndBuyTokenOpen={setIsModalSearchAndBuyTokenOpen}
 
-        setTokenIdToSell={setTokenIdToSell}
+        setTokenIdToTrade={setTokenIdToTrade}
+
+        isModalBuyTokenOpen={isModalBuyTokenOpen}
+        setIsModalBuyTokenOpen={setIsModalBuyTokenOpen}
+
         isModalSellTokenOpen={isModalSellTokenOpen}
         setIsModalSellTokenOpen={setIsModalSellTokenOpen}
       />
