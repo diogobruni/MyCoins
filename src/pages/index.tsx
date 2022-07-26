@@ -16,6 +16,7 @@ import { AccountTokenList } from '../components/AccountTokenList'
 import { ModalSearchAndBuyToken } from '../components/ModalSearchAndBuyToken'
 import { ModalBuyToken } from '../components/ModalBuyToken'
 import { ModalSellToken } from '../components/ModalSellToken'
+import GithubCorner from '../components/GithubCorner'
 
 const Home: NextPage = () => {
   const { portfolio, setPortfolio } = usePortfolio()
@@ -60,6 +61,8 @@ const Home: NextPage = () => {
       <Head>
         {/* <title>Create Next App</title> */}
       </Head>
+
+      <GithubCorner />
 
       <Header />
 
