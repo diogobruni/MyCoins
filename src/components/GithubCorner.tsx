@@ -8,6 +8,7 @@ export default function GithubCorner({ }: Props) {
       <a
         href="https://github.com/diogobruni/MyCoins"
         target="_BLANK"
+        rel="noreferrer noopener"
         className="github-corner"
         aria-label="View source on GitHub"
       >
